@@ -135,3 +135,14 @@ and (max-device-width: 2024px)  {
     }
   }
 }
+.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: none;
+}
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}

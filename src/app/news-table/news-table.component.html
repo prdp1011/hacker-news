@@ -1,4 +1,4 @@
-<table class="table">
+<table class="table" *ngIf="dataState === 'loaded' ">
   <thead>
     <tr>
       <th>Comments</th>
@@ -8,8 +8,7 @@
     </tr>
   </thead>
   <tbody >
-    <ng-container *ngFor="let item of newsDetails; let i = index; trackBy: trackByItemId" >
-      <tr *ngIf="!item.hide">
+      <tr *ngFor="let item of newsDetails; let i = index; trackBy: trackByItemId">
         <td>{{item.commentsCount}}</td>
         <td>{{item.points}}</td>
         <td>
@@ -25,11 +24,14 @@
           </div>
         </td>
       </tr>
-    </ng-container>
   </tbody>
 </table>
-<div class="pagination">
-  <a class="btn" (click)="prev()">Previous</a>
+<div class="pagination" *ngIf="dataState === 'loaded'">
+  <a class="btn" [ngClass]="{'disabled': pageNo < 2}" (click)="prev()">Previous</a>
   <div>|</div>
   <a  class="btn"  (click)="next()">Next</a>
+</div>
+<div class="loader" *ngIf="dataState === 'loading'"></div>
+<div class="empty"  *ngIf="dataState === 'empty'">
+  <h2>No Data</h2>
 </div>

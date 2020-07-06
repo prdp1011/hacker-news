@@ -1,8 +1,9 @@
-import { NewsDetails } from './../models/news.interface';
+import { ChartData } from './../models/news.interface';
 import { ApiService } from './../services/api.service';
-import { Component, OnInit, OnDestroy, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ElementRef, AfterViewInit } from '@angular/core';
 import * as Chart from 'chart.js';
 import { INIT_DATA, CHART_OPTION } from '../models/CONST';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-graph',
@@ -13,20 +14,17 @@ export class GraphComponent implements AfterViewInit, OnDestroy {
   height = '350px';
   data = INIT_DATA;
   chart: any;
+  subs: Subscription;
 
   constructor(public el: ElementRef, private api: ApiService) {}
 
   ngAfterViewInit() {
-    this.api.getNewsDetails(1).subscribe(res => {
-      this.mapToChartData(res);
-      this.initChart();
-    });
-  }
-
-  mapToChartData(res: NewsDetails[]) {
-    res.forEach((ele) => {
-      this.data.labels.push(ele.id);
-      this.data.datasets[0].data.push(ele.points);
+    this.subs = this.api.observeChartData().subscribe((res: ChartData) => {
+      if (res){
+        this.data.labels = res.ids;
+        this.data.datasets[0].data = res.votes;
+        this.reinit();
+      }
     });
   }
 
@@ -47,14 +45,15 @@ export class GraphComponent implements AfterViewInit, OnDestroy {
   reinit() {
       if (this.chart) {
           this.chart.destroy();
-          this.initChart();
       }
+      this.initChart();
   }
 
   ngOnDestroy() {
       if (this.chart) {
           this.chart.destroy();
           this.chart = null;
+          this.subs.unsubscribe();
       }
   }
 }

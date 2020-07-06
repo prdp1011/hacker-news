@@ -12,3 +12,8 @@ export interface NewsDetails {
   id: string;
   hide: boolean;
 }
+
+export interface ChartData{
+  ids: number[];
+  votes: number[];
+}

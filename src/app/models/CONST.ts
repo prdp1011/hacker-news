@@ -29,3 +29,8 @@ export const CHART_OPTION =  {
           }]
   }
 };
+export const LOAD_STATE = {
+   LOADING: 'loading',
+   EMPTY: 'empty',
+   LOADED: 'loaded'
+ };
