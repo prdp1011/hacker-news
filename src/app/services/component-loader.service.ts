@@ -1,8 +1,6 @@
-import { Injectable, ElementRef, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { flatMap, map, distinctUntilChanged, tap, filter } from 'rxjs/Operators';
-
-
+import { Injectable, ElementRef } from '@angular/core';
+import { Observable } from 'rxjs';
+import { flatMap, map, distinctUntilChanged, filter } from 'rxjs/Operators';
 
 @Injectable({
   providedIn: 'root'
