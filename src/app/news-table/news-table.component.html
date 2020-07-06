@@ -1,0 +1,35 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Comments</th>
+      <th>Vote Count</th>
+      <th>Up Count</th>
+      <th>News Details</th>
+    </tr>
+  </thead>
+  <tbody >
+    <ng-container *ngFor="let item of newsDetails; let i = index; trackBy: trackByItemId" >
+      <tr *ngIf="!item.hide">
+        <td>{{item.commentsCount}}</td>
+        <td>{{item.points}}</td>
+        <td>
+          <div class="votearrow btn" (click)="addVote(item, i)"></div>
+        </td>
+        <td class="last">
+          <div class="cont-flex">
+            <div class="font-weight: bold;">{{item.title}}</div>
+            <div class="grey-small">({{item.urldetails.name}})</div>
+            <div><span class="grey-small">by</span> {{item.author}}</div>
+            <div>{{item.createdAt}}</div>
+            <div class="btn" (click)="hide(item, i)">[hide]</div>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+<div class="pagination">
+  <a class="btn" (click)="prev()">Previous</a>
+  <div>|</div>
+  <a  class="btn"  (click)="next()">Next</a>
+</div>

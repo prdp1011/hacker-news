@@ -1,0 +1,137 @@
+.btn{
+  cursor: pointer;
+}
+table {
+  display: block;
+  width: 100%;
+  border-spacing: 0px 11px;
+  thead {
+    background-color: #9f9090;
+  }
+  th, td{
+    padding: 10px 6px 10px 5px;
+    text-align: left;
+
+  }
+  tr{
+    background-color: white;
+    box-shadow: 5px 15px 5px 0px #cac2c2;
+  }
+  .cont-flex{
+    display: flex;
+    justify-content: flex-start;
+    div{
+      margin-left: 2px;
+    }
+    .grey-small{
+      font-size: small;
+      color: #808080;
+    }
+  }
+}
+
+.pagination{
+  display: flex;
+  justify-content: flex-end;
+  .btn{
+    color:red;
+    padding: 5px;
+  }
+  div{
+    padding: 5px;
+  }
+}
+
+@media  (max-width: 760px) {
+  .pagination{
+    justify-content: center;
+  }
+  table {
+    display: block;
+    thead {
+      display: none;
+    }
+    tbody {
+      display: block;
+      .cont-flex{
+        display: block;
+      }
+    }
+  }
+
+  td {
+    display: block;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding: 0px;
+    padding-left: 50% !important ;
+    &:before {
+      position: absolute;
+      top: 0;
+      left: 6px;
+      width: 100%;
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+    &:nth-of-type(1) {
+      &:before {
+        padding: 10px 0px 10px 1px;
+        content: "Comments";
+        font-weight: 600;
+      }
+    }
+    &:nth-of-type(2) {
+      &:before {
+        padding: 10px 0px 10px 1px;
+        content: "Vote Count";
+        font-weight: 600;
+      }
+    }
+    &:nth-of-type(3) {
+      &:before {
+        padding: 10px 0px 10px 1px;
+        content: "Up Count";
+        font-weight: 600;
+      }
+    }
+    &:nth-of-type(4) {
+      &:before {
+        padding: 10px 0px 10px 1px;
+        content: "News Details";
+        font-weight: 600;
+      }
+    }
+  }
+  tr {
+    display: block;
+    margin: 0 0 1rem 0;
+    &:nth-child(odd) {
+      background: #a89898;
+    }
+  }
+}
+// @media (max-width: 750px) and (min-width: 300px){
+//   .votearrow {
+//     transform: scale(1.3,1.3);
+//     margin-right: 6px;
+//   }
+// }
+.votearrow{
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 13px solid black;
+}
+@media  (min-device-width: 800px)
+and (max-device-width: 2024px)  {
+  table {
+    td{
+      width: 2%;
+    }
+    td.last {
+      width: 30%;
+    }
+  }
+}
