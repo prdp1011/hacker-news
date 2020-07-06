@@ -11,9 +11,8 @@
     margin-right: 1%;
     margin-left: 5px;
     position: relative;
-    z-index: 10;
-    min-height: 400px;
-    box-shadow: 5px 15px 5px 0px #cac2c2;
+    min-height: 900px;
+    box-shadow: 5px 15px 5px 0px #706867;
   }
   .graph{
     background: #cccccc;
@@ -22,8 +21,11 @@
     transition: 0.2s;
     margin: 27px 14px 20px 4px;
     position: relative;
-    z-index: 10;
+    min-height: 350px;
     box-shadow: 5px 15px 5px 0px #706867;
+  }
+  .display-none{
+    display: none;
   }
 
 }

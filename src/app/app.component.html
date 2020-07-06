@@ -2,7 +2,7 @@
   <div class="news">
     <router-outlet></router-outlet>
   </div>
-  <div class="graph">
-    <app-graph></app-graph>
-  </div>
+  <div [class]="isloaded ? 'display-none': 'graph'" #graphLoader></div>
+
 </div>
+
