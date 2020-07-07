@@ -55,7 +55,7 @@ export class ApiService {
     this.observeData.next(chart);
   }
 
-  observeChartData(){
+  observeChartData(): Observable<ChartData>{
     return this.observeData.asObservable();
   }
   private mapDataForUi(data): NewsDetails {

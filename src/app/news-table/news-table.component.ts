@@ -30,12 +30,12 @@ export class NewsTableComponent implements OnInit, OnDestroy {
     }));
   }
 
-  hide(item: NewsDetails, i: number){
-    this.newsDetails.slice(i, 1);
+  hide(item: NewsDetails){
+    this.newsDetails = this.newsDetails.filter(ele => ele.id !== item.id);
     this.api.updateNewsDetails(this.newsDetails);
   }
 
-  addVote(item: NewsDetails, i: number){
+  addVote(item: NewsDetails){
     item.points += 1;
     this.api.updateNewsDetails(this.newsDetails);
   }

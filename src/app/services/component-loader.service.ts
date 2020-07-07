@@ -1,16 +1,15 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { flatMap, map, distinctUntilChanged, filter } from 'rxjs/Operators';
+import { flatMap } from 'rxjs/Operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComponentLoaderService {
-  private componentsExist = new Set();
-  constructor() { }
 
   elementInSight(element: ElementRef): Observable<boolean> {
-    const elementVisible$ = new Observable(observer => {
+    return new Observable(observer => {
       const intersectionObserver = new IntersectionObserver(entries => {
         observer.next(entries);
       });
@@ -19,35 +18,9 @@ export class ComponentLoaderService {
       })
       .pipe (
         flatMap((entries: IntersectionObserverEntry[]) => entries),
-        map((entry: IntersectionObserverEntry) => entry.isIntersecting),
-        distinctUntilChanged()
+        map((entry: IntersectionObserverEntry) => entry.isIntersecting)
       );
-
-    return elementVisible$.pipe(distinctUntilChanged());
   }
-
-  loadComponent(element, id): Observable<boolean> {
-    return this.elementInSight(element)
-    .pipe(map(isInSight => {
-      if (isInSight){
-        return this.addComponentOrNot(id);
-      }
-      return false;
-    }), filter(res => res));
-  }
-
-  addComponentOrNot(id): boolean {
-    const isComp = this.componentsExist.has(id);
-    if (isComp) {
-      return false;
-    } else {
-      this.componentsExist.add(id);
-      return true;
-    }
-  }
-
-
-
 
 
 }

@@ -1,5 +1,7 @@
-import { Component, AfterViewInit, ViewChild, ElementRef, ComponentFactoryResolver, Injector, ApplicationRef, EmbeddedViewRef, ViewContainerRef } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef,
+   ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import { ComponentLoaderService } from './services/component-loader.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,21 +11,26 @@ import { ComponentLoaderService } from './services/component-loader.service';
 export class AppComponent implements AfterViewInit {
   @ViewChild('graphLoader') graphLoader: ElementRef;
   isloaded: boolean;
+  subs: Subscription;
   constructor(
     private listServ: ComponentLoaderService,
     private viewContainerRef: ViewContainerRef,
     private cfr: ComponentFactoryResolver){}
 
   ngAfterViewInit(): void {
-    this.listServ.loadComponent(this.graphLoader, 'graphLoader')
-    .subscribe(() => this.startAddingComponent(this.graphLoader));
+    this.subs = this.listServ.elementInSight(this.graphLoader)
+    .subscribe((res) => {
+      if (res){
+        this.subs.unsubscribe();
+        this.startAddingComponent();
+      }
+      });
   }
 
-  async startAddingComponent(ref: ElementRef){
+  async startAddingComponent(){
     this.viewContainerRef.clear();
     const { GraphComponent } = await import('./graph/graph.component');
     this.isloaded = true;
-
     this.viewContainerRef.createComponent(
       this.cfr.resolveComponentFactory(GraphComponent)
     );

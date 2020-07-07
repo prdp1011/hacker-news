@@ -8,11 +8,11 @@
     </tr>
   </thead>
   <tbody >
-      <tr *ngFor="let item of newsDetails; let i = index; trackBy: trackByItemId">
+      <tr *ngFor="let item of newsDetails; trackBy: trackByItemId">
         <td>{{item.commentsCount}}</td>
         <td>{{item.points}}</td>
         <td>
-          <div class="votearrow btn" (click)="addVote(item, i)"></div>
+          <div class="votearrow btn" (click)="addVote(item)"></div>
         </td>
         <td class="last">
           <div class="cont-flex">
@@ -20,7 +20,7 @@
             <div class="grey-small">({{item.urldetails.name}})</div>
             <div><span class="grey-small">by</span> {{item.author}}</div>
             <div>{{item.createdAt}}</div>
-            <div class="btn" (click)="hide(item, i)">[hide]</div>
+            <div class="btn" (click)="hide(item)">[hide]</div>
           </div>
         </td>
       </tr>
