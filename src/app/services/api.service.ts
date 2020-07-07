@@ -64,7 +64,7 @@ export class ApiService {
   private mapDataForUi(data): NewsDetails {
     const { title, url, author, num_comments, points, created_at, objectID } = data;
     const urldetails = this.createUrl(url);
-    const createdAt = this.getDateFrom(created_at);
+    const createdAt = ' ' + this.getDateFrom(created_at) + ' ago';
     return {
        title,
        urldetails,
@@ -84,28 +84,28 @@ export class ApiService {
   private getDateFrom(date){
     const d2 = new Date(date).getTime();
     const d1 = Date.now();
-    const s  = Math.floor( d1 - d2 / 1000 );
-    if (s < 60){
-      return  s + ' seconds ago';
+    const s  = Math.floor( (d1 - d2) / 1000 );
+    if (s < 60) {
+      return  s + ' seconds';
     }
     if (s < (60 * 60)){
-      return Math.floor( s / 60 ) + ' minutes ago';
+      return Math.floor( s / 60 ) + ' minutes';
     }
     if (s < (60 * 60 * 24)){
-      return Math.floor( s / (60 * 60) ) + ' hours ago';
+      return Math.floor( s / (60 * 60) ) + ' hours';
     }
     if (s < (60 * 60 * 24 * 7)){
-      return Math.floor( s / (60 * 60 * 24) ) + ' days ago';
+      return Math.floor( s / (60 * 60 * 24) ) + ' days';
     }
 
     if (s < (30 * 60 * 60 * 24)) {
-      return Math.floor( s / (60 * 60 * 24 * 7) ) + ' weeks ago';
+      return Math.floor( s / (60 * 60 * 24 * 7) ) + ' weeks';
     }
 
     if (s < (12 * 30 * 60 * 60 * 24)) {
-      return Math.floor( s / (60 * 60 * 24 * 30) ) + ' months ago';
+      return Math.floor( s / (60 * 60 * 24 * 30) ) + ' months';
     }
-    return Math.floor( s / (60 * 60 * 24 * 30 * 12) ) + ' year ago';
+    return Math.floor( s / (60 * 60 * 24 * 30 * 12) ) + ' year';
   }
 
   updateNewsDetails(details) {

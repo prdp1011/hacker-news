@@ -1,0 +1,3 @@
+# Allow all URLs
+User-agent: *
+Disallow:

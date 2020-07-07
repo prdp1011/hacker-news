@@ -1,6 +1,20 @@
 # HackerNews
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
+Angular Version - 9.1.4
+Url - <https://hacker-news-10.herokuapp.com>
+
+## Components
+
+Two Components
+News table Component
+Graph Copmonent - Dynamic Component added on demand
+
+## Features
+
+- Dynamic Loaded Component
+- When user load to line chart then it loaded to view
+- Dynamic added service to load faster first page
+- user can bookmark the current
 
 ## Development server
 
