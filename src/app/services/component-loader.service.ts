@@ -1,6 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { flatMap, map } from 'rxjs/Operators';
+import {  map, mergeMap } from 'rxjs/Operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ComponentLoaderService {
       return () => { intersectionObserver.disconnect(); };
       })
       .pipe (
-        flatMap((entries: IntersectionObserverEntry[]) => entries),
+        mergeMap((entries: IntersectionObserverEntry[]) => entries),
         map((entry: IntersectionObserverEntry) => entry.isIntersecting)
       );
   }
