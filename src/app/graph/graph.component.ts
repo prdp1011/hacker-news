@@ -1,6 +1,6 @@
 import { ChartData } from './../models/news.interface';
 import { ApiService } from './../services/api.service';
-import { Component, OnDestroy, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy, ElementRef, AfterViewInit, NgZone } from '@angular/core';
 import * as Chart from 'chart.js';
 import { INIT_DATA, CHART_OPTION } from '../models/CONST';
 import { Subscription } from 'rxjs';
@@ -15,7 +15,9 @@ export class GraphComponent implements AfterViewInit, OnDestroy {
   private data = INIT_DATA;
   private chart: any;
   private subs: Subscription;
-  constructor(public el: ElementRef, private api: ApiService) {}
+  constructor(public el: ElementRef,
+              private ngZone: NgZone,
+              private api: ApiService) {}
 
   ngAfterViewInit() {
     this.subs = this.api.observeChartData().subscribe((res: ChartData) => {
@@ -32,12 +34,13 @@ export class GraphComponent implements AfterViewInit, OnDestroy {
     if (options.responsive && (this.height)) {
         options.maintainAspectRatio = false;
     }
-
-    this.chart = new Chart(this.el.nativeElement.children[0].children[0], {
-        type: 'line',
-        data: this.data,
-        options,
-        plugins: []
+    this.ngZone.runOutsideAngular(() => {
+      this.chart = new Chart(this.el.nativeElement.children[0].children[0], {
+          type: 'line',
+          data: this.data,
+          options,
+          plugins: []
+      });
     });
   }
 

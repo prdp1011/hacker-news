@@ -1,12 +1,4 @@
+@import url('../common.scss');
 .pos-rel{
   position:relative;
-  &.graph {
-    background: #cccccc;
-    border-radius: 1rem;
-    padding: 20px;
-    transition: 0.2s;
-    margin: 27px 14px 20px 4px;
-    min-height: 350px;
-    box-shadow: 5px 15px 5px 0px #706867;
-  }
 }

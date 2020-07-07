@@ -1,6 +1,6 @@
 import { NewsDetails, UrlDetails, ChartData } from './../models/news.interface';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
@@ -59,7 +59,7 @@ export class ApiService {
   }
 
   observeChartData(): Observable<ChartData>{
-    return this.observeData.asObservable();
+    return this.observeData.asObservable().pipe(debounceTime(500));
   }
   private mapDataForUi(data): NewsDetails {
     const { title, url, author, num_comments, points, created_at, objectID } = data;

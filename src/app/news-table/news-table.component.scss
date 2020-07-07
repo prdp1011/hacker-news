@@ -1,3 +1,5 @@
+$contents: "Comments", "Vote Count", "Up Count", "News Details";
+
 .btn{
   cursor: pointer;
 }
@@ -9,13 +11,20 @@ table {
     background-color: #9f9090;
   }
   th, td{
-    padding: 10px 6px 10px 5px;
+    padding: 15px 10px 15px 10px;
     text-align: left;
 
   }
   tr{
     background-color: white;
     box-shadow: 5px 15px 5px 0px #cac2c2;
+  }
+  .votearrow{
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 13px solid black;
   }
   .cont-flex{
     display: flex;
@@ -25,7 +34,7 @@ table {
     }
     .grey-small{
       font-size: small;
-      color: #808080;
+      color: #4f4b4b;
     }
   }
 }
@@ -34,14 +43,34 @@ table {
   display: flex;
   justify-content: flex-end;
   .btn{
-    color:red;
+    color:#7c0606;
     padding: 5px;
   }
   div{
     padding: 5px;
   }
 }
-
+.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  cursor: none;
+}
+.empty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+@media  (min-device-width: 800px) and (max-device-width: 2024px)  {
+  table {
+    td{
+      width: 2%;
+    }
+    td.last {
+      width: 30%;
+    }
+  }
+}
 @media  (max-width: 760px) {
   .pagination{
     justify-content: center;
@@ -70,38 +99,20 @@ table {
       position: absolute;
       top: 0;
       left: 6px;
-      width: 100%;
-      padding-right: 10px;
+      width: 35%;
+      padding: 15px 0 15px 1px;
+      font-weight: bold;
       white-space: nowrap;
     }
-    &:nth-of-type(1) {
-      &:before {
-        padding: 10px 0px 10px 1px;
-        content: "Comments";
-        font-weight: 600;
+    @each $cont in $contents {
+      $i: index($contents, $cont);
+      &:nth-of-type(#{$i}) {
+        &:before {
+          content: $cont;
+        }
       }
     }
-    &:nth-of-type(2) {
-      &:before {
-        padding: 10px 0px 10px 1px;
-        content: "Vote Count";
-        font-weight: 600;
-      }
-    }
-    &:nth-of-type(3) {
-      &:before {
-        padding: 10px 0px 10px 1px;
-        content: "Up Count";
-        font-weight: 600;
-      }
-    }
-    &:nth-of-type(4) {
-      &:before {
-        padding: 10px 0px 10px 1px;
-        content: "News Details";
-        font-weight: 600;
-      }
-    }
+
   }
   tr {
     display: block;
@@ -111,38 +122,6 @@ table {
     }
   }
 }
-// @media (max-width: 750px) and (min-width: 300px){
-//   .votearrow {
-//     transform: scale(1.3,1.3);
-//     margin-right: 6px;
-//   }
-// }
-.votearrow{
-  width: 0;
-  height: 0;
-  border-left: 8px solid transparent;
-  border-right: 8px solid transparent;
-  border-bottom: 13px solid black;
-}
-@media  (min-device-width: 800px)
-and (max-device-width: 2024px)  {
-  table {
-    td{
-      width: 2%;
-    }
-    td.last {
-      width: 30%;
-    }
-  }
-}
-.disabled {
-  opacity: 0.3;
-  pointer-events: none;
-  cursor: none;
-}
-.empty{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-}
+
+
+
