@@ -1,7 +1,8 @@
 import { Component, AfterViewInit, ViewChild, ElementRef,
-   ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+   ComponentFactoryResolver, ViewContainerRef, Inject, PLATFORM_ID } from '@angular/core';
 import { ComponentLoaderService } from './services/component-loader.service';
 import { Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -13,15 +14,27 @@ export class AppComponent implements AfterViewInit {
   isloaded: boolean;
   subs: Subscription;
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     private listServ: ComponentLoaderService,
     private viewContainerRef: ViewContainerRef,
     private cfr: ComponentFactoryResolver){}
 
   ngAfterViewInit(): void {
+    const platform = isPlatformBrowser(this.platformId);
+    if (platform){
+      this.addComponent();
+    } else {
+      // this.startAddingComponent();
+    }
+  }
+
+  addComponent() {
     this.subs = this.listServ.elementInSight(this.graphLoader)
     .subscribe((res) => {
       if (res){
-        this.subs.unsubscribe();
+        if (this.subs){
+          this.subs.unsubscribe();
+        }
         this.startAddingComponent();
       }
       });

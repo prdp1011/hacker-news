@@ -12,10 +12,9 @@ import { Subscription } from 'rxjs';
 })
 export class GraphComponent implements AfterViewInit, OnDestroy {
   height = '350px';
-  data = INIT_DATA;
-  chart: any;
-  subs: Subscription;
-
+  private data = INIT_DATA;
+  private chart: any;
+  private subs: Subscription;
   constructor(public el: ElementRef, private api: ApiService) {}
 
   ngAfterViewInit() {
@@ -28,7 +27,7 @@ export class GraphComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  initChart() {
+  private initChart() {
     const options: any = CHART_OPTION;
     if (options.responsive && (this.height)) {
         options.maintainAspectRatio = false;
@@ -42,7 +41,7 @@ export class GraphComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  reinit() {
+  private reinit() {
       if (this.chart) {
           this.chart.destroy();
       }
@@ -53,7 +52,9 @@ export class GraphComponent implements AfterViewInit, OnDestroy {
       if (this.chart) {
           this.chart.destroy();
           this.chart = null;
-          this.subs.unsubscribe();
+      }
+      if (this.subs){
+        this.subs.unsubscribe();
       }
   }
 }

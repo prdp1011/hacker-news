@@ -1,7 +1,6 @@
 import { Injectable, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import { flatMap } from 'rxjs/Operators';
-import { map } from 'rxjs/operators';
+import { flatMap, map } from 'rxjs/Operators';
 
 @Injectable({
   providedIn: 'root'

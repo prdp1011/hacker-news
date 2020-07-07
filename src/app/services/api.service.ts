@@ -1,18 +1,21 @@
 import { NewsDetails, UrlDetails, ChartData } from './../models/news.interface';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, BehaviorSubject } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   private currentKey: string;
+  private storage: Map<string, string> = new Map();
   private observeData: BehaviorSubject<ChartData> = new BehaviorSubject(null);
   totalRecord = 200;
-  constructor(private http: HttpClient) {
-   }
+  constructor(private http: HttpClient,
+              @Inject(PLATFORM_ID) private platformId: any,
+              ) {}
 
   getNewsDetails(pageNo = 1): Observable<NewsDetails[]> {
     this.currentKey = 'hacker_news_data_Page_' + pageNo;
@@ -111,12 +114,18 @@ export class ApiService {
   }
 
   private getNewsFromStorage(): Array<any>{
-    const items = localStorage.getItem(this.currentKey);
+    const platform = isPlatformBrowser(this.platformId);
+    const items = platform ? localStorage.getItem(this.currentKey) : this.storage.get(this.currentKey);
     return items ? JSON.parse(items) : null;
   }
 
   private setNewsFromStorage(item: NewsDetails[]) {
-    localStorage.setItem(this.currentKey, JSON.stringify(item));
+    const platform = isPlatformBrowser(this.platformId);
+    if (platform) {
+      localStorage.setItem(this.currentKey, JSON.stringify(item));
+    } else {
+      this.storage.set(this.currentKey, JSON.stringify(item));
+    }
   }
 
 }

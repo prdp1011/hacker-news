@@ -24,6 +24,7 @@
     "@angular/platform-browser-dynamic": "~9.1.4",
     "@angular/platform-server": "~9.1.4",
     "@angular/router": "~9.1.4",
+    "@angular/service-worker": "~9.1.4",
     "@nguniversal/express-engine": "^9.1.1",
     "chart.js": "^2.9.3",
     "express": "^4.15.2",
