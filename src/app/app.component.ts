@@ -1,6 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef,
-   ComponentFactoryResolver, ViewContainerRef, Inject, PLATFORM_ID } from '@angular/core';
-import { ComponentLoaderService } from './services/component-loader.service';
+   ComponentFactoryResolver, ViewContainerRef, Inject, PLATFORM_ID, Injector } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -15,8 +14,8 @@ export class AppComponent implements AfterViewInit {
   subs: Subscription;
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
-    private listServ: ComponentLoaderService,
     private viewContainerRef: ViewContainerRef,
+    private inject: Injector,
     private cfr: ComponentFactoryResolver){}
 
   ngAfterViewInit(): void {
@@ -28,8 +27,10 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  addComponent() {
-    this.subs = this.listServ.elementInSight(this.graphLoader)
+  async addComponent() {
+    const { ComponentLoaderService } = await import('./services/component-loader.service');
+    const serv = this.inject.get(ComponentLoaderService);
+    this.subs = serv.elementInSight(this.graphLoader)
     .subscribe((res) => {
       if (res){
         if (this.subs){

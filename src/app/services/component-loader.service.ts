@@ -1,6 +1,6 @@
+import {  map } from 'rxjs/internal/operators';
 import { Injectable, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as map from 'rxjs/operators/map';
 import { flatMap } from 'rxjs/internal/operators';
 
 
