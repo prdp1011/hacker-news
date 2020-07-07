@@ -1,5 +1,4 @@
-import { Component, AfterViewInit, ViewChild, ElementRef,
-   ComponentFactoryResolver, ViewContainerRef, Inject, PLATFORM_ID, Injector } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Inject, PLATFORM_ID, Injector } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -14,16 +13,13 @@ export class AppComponent implements AfterViewInit {
   subs: Subscription;
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
-    private viewContainerRef: ViewContainerRef,
     private inject: Injector,
-    private cfr: ComponentFactoryResolver){}
+    ){}
 
   ngAfterViewInit(): void {
     const platform = isPlatformBrowser(this.platformId);
     if (platform){
       this.addComponent();
-    } else {
-      // this.startAddingComponent();
     }
   }
 
@@ -36,17 +32,21 @@ export class AppComponent implements AfterViewInit {
         if (this.subs){
           this.subs.unsubscribe();
         }
-        this.startAddingComponent();
+        this.addLineChartComp();
       }
       });
   }
 
-  async startAddingComponent(){
-    this.viewContainerRef.clear();
+  async addLineChartComp(){
+    const { ViewContainerRef } = await import('@angular/core');
+    const { ComponentFactoryResolver } = await import('@angular/core');
+    const viewContainerRef = this.inject.get(ViewContainerRef);
+    const cfr = this.inject.get(ComponentFactoryResolver);
+    viewContainerRef.clear();
     const { GraphComponent } = await import('./graph/graph.component');
     this.isloaded = true;
-    this.viewContainerRef.createComponent(
-      this.cfr.resolveComponentFactory(GraphComponent)
+    viewContainerRef.createComponent(
+      cfr.resolveComponentFactory(GraphComponent)
     );
   }
 }

@@ -12,7 +12,6 @@ export class ApiService {
   private currentKey: string;
   private storage: Map<string, string> = new Map();
   private observeData: BehaviorSubject<ChartData> = new BehaviorSubject(null);
-  totalRecord = 200;
   constructor(private http: HttpClient,
               @Inject(PLATFORM_ID) private platformId: any,
               ) {}
@@ -29,12 +28,8 @@ export class ApiService {
   }
 
   private mapToChartDataFromApi(data) {
-    this.totalRecord = data.nbHits;
     const res: NewsDetails[] =  data.hits;
-    const chart = {
-      ids: [],
-      votes: []
-    };
+    const chart = new ChartData();
     const result =  res.map(ele => {
       const list = this.mapDataForUi(ele);
       chart.ids.push(list.id);
@@ -47,10 +42,7 @@ export class ApiService {
   }
 
   private createGraphData(list = []) {
-    const chart = {
-      ids: [],
-      votes: []
-    };
+    const chart = new ChartData();
     list.forEach(element => {
       chart.ids.push(element.id);
       chart.votes.push(element.points);
@@ -72,8 +64,7 @@ export class ApiService {
        commentsCount: num_comments  || 0,
        points: points || 0,
        createdAt,
-       id: objectID,
-       hide: false
+       id: objectID
     };
   }
   private createUrl(url): UrlDetails {

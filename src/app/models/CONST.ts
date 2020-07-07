@@ -11,6 +11,7 @@ export const INIT_DATA =  {
 
 export const CHART_OPTION =  {
   responsive: true,
+  maintainAspectRatio: false,
   legend: {
     display: false
   },

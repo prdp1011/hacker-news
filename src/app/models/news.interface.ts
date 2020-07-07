@@ -10,10 +10,11 @@ export interface NewsDetails {
   points: number;
   createdAt: string;
   id: string;
-  hide: boolean;
 }
 
-export interface ChartData{
-  ids: number[];
-  votes: number[];
+export class ChartData{
+  constructor(
+    public ids = [],
+    public votes = []
+  ){}
 }

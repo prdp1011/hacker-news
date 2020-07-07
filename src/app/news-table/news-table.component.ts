@@ -1,7 +1,7 @@
 import { LOAD_STATE } from './../models/CONST';
 import { ApiService } from './../services/api.service';
 import { NewsDetails } from './../models/news.interface';
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -12,10 +12,9 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./news-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NewsTableComponent implements OnInit, OnDestroy {
+export class NewsTableComponent implements OnInit {
   newsDetails: NewsDetails[];
   pageNo: number;
-  subs = new Subscription();
   dataState =  LOAD_STATE.LOADING;
   constructor(
     private api: ApiService,
@@ -24,12 +23,12 @@ export class NewsTableComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.subs.add(this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       const i = isNaN(params.pageNo) ? 1 : params.pageNo;
       this.dataState =  LOAD_STATE.LOADING;
       this.pageNo = i;
       this.getNews(i);
-    }));
+    });
   }
 
   hide(item: NewsDetails){
@@ -57,17 +56,11 @@ export class NewsTableComponent implements OnInit, OnDestroy {
   }
 
   next(){
-      this.router.navigate(['', ++this.pageNo]);
+    this.router.navigate(['', ++this.pageNo]);
   }
 
   trackByItemId(i, {id}){
     return id;
-  }
-
-  ngOnDestroy(): void {
-    if (this.subs) {
-      this.subs.unsubscribe();
-    }
   }
 
 }
