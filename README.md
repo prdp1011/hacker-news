@@ -1,20 +1,25 @@
 # HackerNews
 
 Angular Version - 9.1.4
-Url - <https://hacker-news-10.herokuapp.com>
+Heroku Url - <https://hacker-news-10.herokuapp.com>
 
 ## Components
 
 Two Components
-News table Component
-Graph Copmonent - Dynamic Component added on demand
+News table Component & Graph Component
 
 ## Features
 
-- Dynamic Loaded Component
-- When user load to line chart then it loaded to view
-- Dynamic added service to load faster first page
-- user can bookmark the current
+- Smooth User Experience
+- Responsive for Desktop, Mobile and tablet also
+- Search Engine Optimization (SEO)
+- ofline accessible, PWA App
+
+- Graph Component only loaded when User scroll to it.
+- Dynamic Loaded Component used so only required code is render in the view.
+- User can add as many upvotes as you wish for this added debounce time to wait until user complete their action
+- user can bookmark the current page
+- Charts are updated as user takes some actopn.
 
 ## Development server
 

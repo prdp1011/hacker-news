@@ -11,8 +11,7 @@ import { environment } from '../environments/environment';
 
 const routes: Routes = [
   { path: ':pageNo', component: NewsTableComponent },
-  { path: '', component: NewsTableComponent},
-  { path: '**', redirectTo: '/' }
+  { path: '', redirectTo: '/1', pathMatch: 'full'},
 ];
 @NgModule({
   declarations: [

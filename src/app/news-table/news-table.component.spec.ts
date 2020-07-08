@@ -32,7 +32,7 @@ describe('NewsTableComponent', () => {
   it('should create hide news', () => {
     const item = component.newsDetails[0];
     component.hide(item);
-    const lists = component.newsDetails.filter(list => list.objectID !== item.objectID);
+    const lists = component.newsDetails.filter(list => list.id !== item.id);
     expect(component.newsDetails).toEqual(lists);
   });
 
