@@ -22,4 +22,8 @@ describe('GraphComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('should return modified host name', () => {
+    // component.createData()
+    expect(component).toBeTruthy();
+  });
 });

@@ -1,4 +1,4 @@
-import { NewsDetails, UrlDetails, ChartData } from './../models/news.interface';
+import { NewsDetails, ChartData } from './../models/news.interface';
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { map, debounceTime } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,6 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class ApiService {
   private currentKey: string;
-  private storage: Map<string, string> = new Map();
   private observeData: BehaviorSubject<ChartData> = new BehaviorSubject(null);
   constructor(private http: HttpClient,
               @Inject(PLATFORM_ID) private platformId: any,
@@ -55,8 +54,8 @@ export class ApiService {
   }
   private mapDataForUi(data): NewsDetails {
     const { title, url, author, num_comments, points, created_at, objectID } = data;
-    const urldetails = this.createUrl(url);
-    const createdAt = ' ' + this.getDateFrom(created_at) + ' ago';
+    const urldetails = url ? this.createUrl(url) : ' - ';
+    const createdAt = this.getDateFrom(created_at) + ' ago';
     return {
        title,
        urldetails,
@@ -67,9 +66,9 @@ export class ApiService {
        id: objectID
     };
   }
-  private createUrl(url): UrlDetails {
+  private createUrl(url): string {
     const name = /^((http[s]?|ftp):\/)?\/?www.?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?$/g.test(url) ? RegExp.$3 : ' - ';
-    return {url, name};
+    return name;
   }
 
   private getDateFrom(date){
@@ -104,18 +103,17 @@ export class ApiService {
     this.createGraphData(details);
   }
 
-  private getNewsFromStorage(): Array<any>{
+  private getNewsFromStorage(): NewsDetails[] | any {
     const platform = isPlatformBrowser(this.platformId);
-    const items = platform ? localStorage.getItem(this.currentKey) : this.storage.get(this.currentKey);
-    return items ? JSON.parse(items) : null;
+    return platform ? JSON.parse(localStorage.getItem(this.currentKey)) : null;
   }
 
   private setNewsFromStorage(item: NewsDetails[]) {
+    // This Method can be used for update the data table and graph we can
+    // use api and after result we can use getNewsFromStorage method to provide result to components
     const platform = isPlatformBrowser(this.platformId);
     if (platform) {
       localStorage.setItem(this.currentKey, JSON.stringify(item));
-    } else {
-      this.storage.set(this.currentKey, JSON.stringify(item));
     }
   }
 

@@ -1,16 +1,14 @@
 import { LOAD_STATE } from './../models/CONST';
 import { ApiService } from './../services/api.service';
 import { NewsDetails } from './../models/news.interface';
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-news-table',
   templateUrl: './news-table.component.html',
-  styleUrls: ['./news-table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./news-table.component.scss']
 })
 export class NewsTableComponent implements OnInit {
   newsDetails: NewsDetails[];
@@ -20,7 +18,9 @@ export class NewsTableComponent implements OnInit {
     private api: ApiService,
     private router: Router,
     private ref: ChangeDetectorRef,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute) {
+      ref.detach();
+    }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -34,11 +34,13 @@ export class NewsTableComponent implements OnInit {
   hide(item: NewsDetails){
     this.newsDetails = this.newsDetails.filter(ele => ele.id !== item.id);
     this.api.updateNewsDetails(this.newsDetails);
+    this.ref.detectChanges();
   }
 
   addVote(item: NewsDetails){
     item.points += 1;
     this.api.updateNewsDetails(this.newsDetails);
+    this.ref.detectChanges();
   }
 
   getNews(page){
@@ -52,11 +54,13 @@ export class NewsTableComponent implements OnInit {
   prev(){
     if (this.pageNo > 1){
       this.router.navigate(['', --this.pageNo]);
+      // this.ref.detectChanges();
     }
   }
 
   next(){
-    this.router.navigate(['', ++this.pageNo]);
+      this.router.navigate(['', ++this.pageNo]);
+      // this.ref.detectChanges();
   }
 
   trackByItemId(i, {id}){

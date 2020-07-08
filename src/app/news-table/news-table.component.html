@@ -16,11 +16,13 @@
         </td>
         <td class="last">
           <div class="cont-flex">
-            <div class="font-weight: bold;">{{item.title}}</div>
-            <div class="grey-small">({{item.urldetails.name}})</div>
-            <div><span class="grey-small">by</span> {{item.author}}</div>
-            <div>{{item.createdAt}}</div>
-            <div class="btn" (click)="hide(item)">[hide]</div>
+            <div class="flex-start">
+              <span class="">{{item.title}}</span>
+              <span class="grey-small">({{item.urldetails}})</span>
+              <span><span class="grey-small">by</span> {{item.author}}</span>
+              <span class="grey-small">{{item.createdAt}}</span>
+            </div>
+            <div class="btn flex-end" (click)="hide(item)">[hide]</div>
           </div>
         </td>
       </tr>

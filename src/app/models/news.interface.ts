@@ -1,10 +1,12 @@
-export interface UrlDetails {
-  url: string;
-  name: string;
+export class UrlDetails {
+  constructor(
+   public url = '',
+   public name = ' - '
+  ){}
 }
 export interface NewsDetails {
   title: string;
-  urldetails: UrlDetails;
+  urldetails: string;
   author: string;
   commentsCount: number;
   points: number;
